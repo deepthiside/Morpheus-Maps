@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morpheus Maps - Road Safety Intelligence</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="landing-styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <img src="assets/logo.png" alt="Morpheus Maps" class="nav-logo" id="nav-logo">
+                <i class="fas fa-map-marked-alt nav-logo-icon" id="nav-logo-icon" style="display: none;"></i>
+                <span class="brand-name">Morpheus Maps</span>
+            </div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#features">Features</a>
+                <a href="#team">Team</a>
+                <a href="#contact">Contact</a>
+                <button class="btn btn-primary" id="signin-btn">Sign In</button>
+            </div>
+            <div class="mobile-menu-toggle" id="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Revolutionizing Road Safety with <span class="highlight">AI Intelligence</span></h1>
+                <p class="hero-subtitle">Predict, prevent, and protect with our cutting-edge road accident hotspot prediction system powered by machine learning and real-time data analytics.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary btn-large" id="get-started-btn">Get Started</button>
+                    <button class="btn btn-secondary btn-large" id="learn-more-btn">Learn More</button>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">95%</span>
+                        <span class="stat-label">Accuracy</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Cities Covered</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">1M+</span>
+                        <span class="stat-label">Safe Routes</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-map-preview">
+                    <i class="fas fa-map-marked-alt hero-icon"></i>
+                    <div class="floating-cards">
+                        <div class="floating-card card-1">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span>High Risk Detected</span>
+                        </div>
+                        <div class="floating-card card-2">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Safe Route Found</span>
+                        </div>
+                        <div class="floating-card card-3">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Risk Analytics</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>About Morpheus Maps</h2>
+                <p>Pioneering the future of road safety through intelligent data analytics</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Why This Project Was Created</h3>
+                    <p>Road accidents are one of the leading causes of death globally, with over 1.3 million fatalities annually. Traditional methods of identifying dangerous road areas are reactive, based on past incidents rather than predictive intelligence.</p>
+                    <p>Morpheus Maps was born from the vision to transform road safety from reactive to proactive, using cutting-edge AI and machine learning to predict accident hotspots before they claim lives.</p>
+                    
+                    <h3>Our Mission</h3>
+                    <p>To create a world where every journey is safer through intelligent prediction, real-time analysis, and actionable insights that prevent accidents before they happen.</p>
+                </div>
+                <div class="about-visual">
+                    <div class="mission-cards">
+                        <div class="mission-card">
+                            <i class="fas fa-brain"></i>
+                            <h4>AI-Powered Predictions</h4>
+                            <p>Advanced machine learning algorithms analyze multiple data sources</p>
+                        </div>
+                        <div class="mission-card">
+                            <i class="fas fa-clock"></i>
+                            <h4>Real-Time Analysis</h4>
+                            <p>Instant risk assessment based on current conditions</p>
+                        </div>
+                        <div class="mission-card">
+                            <i class="fas fa-users"></i>
+                            <h4>Community Driven</h4>
+                            <p>User reports enhance prediction accuracy</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Goals Section -->
+    <section id="goals" class="goals">
+        <div class="container">
+            <div class="section-header">
+                <h2>Project Goals</h2>
+                <p>Our ambitious targets for creating safer roads worldwide</p>
+            </div>
+            <div class="goals-grid">
+                <div class="goal-card">
+                    <div class="goal-icon">
+                        <i class="fas fa-target"></i>
+                    </div>
+                    <h3>Reduce Accidents by 40%</h3>
+                    <p>Through predictive analytics and early warning systems, we aim to significantly reduce road accidents in covered areas.</p>
+                </div>
+                <div class="goal-card">
+                    <div class="goal-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>Global Coverage</h3>
+                    <p>Expand our intelligent road safety system to cover major cities and highways across all continents.</p>
+                </div>
+                <div class="goal-card">
+                    <div class="goal-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Government Partnerships</h3>
+                    <p>Collaborate with transportation authorities to integrate our insights into urban planning and traffic management.</p>
+                </div>
+                <div class="goal-card">
+                    <div class="goal-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Integration</h3>
+                    <p>Seamlessly integrate with navigation apps and emergency services for real-time safety alerts.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Key Features</h2>
+                <p>Comprehensive tools for road safety intelligence</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <h3>Route Risk Analysis</h3>
+                    <p>Get detailed risk assessments for any route with AI-powered predictions and alternative safer paths.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <h3>Hotspot Detection</h3>
+                    <p>Identify accident-prone areas with precision using historical data and current conditions.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cloud-sun"></i>
+                    </div>
+                    <h3>Weather Integration</h3>
+                    <p>Real-time weather data integration for accurate risk assessment under various conditions.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Community Reports</h3>
+                    <p>Crowdsourced risk reporting system that enhances prediction accuracy through user feedback.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Analytics Dashboard</h3>
+                    <p>Comprehensive analytics and visualizations for traffic authorities and urban planners.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3>Smart Alerts</h3>
+                    <p>Proactive notifications about emerging risks and safer alternative routes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Target Users Section -->
+    <section id="users" class="users">
+        <div class="container">
+            <div class="section-header">
+                <h2>Target Users</h2>
+                <p>Serving diverse stakeholders in road safety ecosystem</p>
+            </div>
+            <div class="users-grid">
+                <div class="user-card">
+                    <div class="user-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h3>Daily Commuters</h3>
+                    <p>Regular travelers seeking safer routes for their daily journeys with real-time risk updates.</p>
+                </div>
+                <div class="user-card">
+                    <div class="user-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3>Fleet Operators</h3>
+                    <p>Transportation companies optimizing routes for safety and efficiency of their vehicle fleets.</p>
+                </div>
+                <div class="user-card">
+                    <div class="user-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>Government Agencies</h3>
+                    <p>Traffic authorities and urban planners using data-driven insights for infrastructure development.</p>
+                </div>
+                <div class="user-card">
+                    <div class="user-icon">
+                        <i class="fas fa-ambulance"></i>
+                    </div>
+                    <h3>Emergency Services</h3>
+                    <p>First responders optimizing response times and deployment strategies based on risk patterns.</p>
+                </div>
+                <div class="user-card">
+                    <div class="user-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Insurance Companies</h3>
+                    <p>Insurers leveraging risk data for accurate premium calculations and policy development.</p>
+                </div>
+                <div class="user-card">
+                    <div class="user-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Researchers</h3>
+                    <p>Academic institutions and traffic safety researchers accessing comprehensive datasets for studies.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="team">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Development Team</h2>
+                <p>Meet the innovative minds behind Morpheus Maps</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-photo">
+                        <img src="assets/udayrajphoto.jpg" alt="Developer" id="developer-photo">
+                        <div class="team-photo-placeholder" id="photo-placeholder">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <h3>Uday Raj Sharma</h3>
+                        <p class="team-role">Lead Developer & AI Specialist</p>
+                        <p class="team-description">Passionate about leveraging technology to solve real-world problems. Specializes in machine learning, geospatial analytics, and scalable web applications.</p>
+                        <div class="team-skills">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Machine Learning</span>
+                            <span class="skill-tag">Flask</span>
+                            <span class="skill-tag">Leaflet.js</span>
+                        </div>
+                        <div class="team-social">
+                            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Get In Touch</h2>
+                <p>Ready to make roads safer? Let's connect</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>contact@morpheusmaps.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>+1 (555) 123-4567</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Address</h4>
+                            <p>123 Innovation Street<br>Tech City, TC 12345</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contact-form" action="https://formspree.io/f/xgveqjgl" method="POST">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="subject" name="subject" placeholder="Subject" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+                        </div>
+                        <!-- Hidden field to specify recipient -->
+                        <input type="hidden" name="_to" value="infinity282005@gmail.com">
+                        <!-- Hidden field to set subject prefix -->
+                        <input type="hidden" name="_subject" value="Contact Form - Morpheus Maps">
+                        <!-- Redirect after submission -->
+                        <input type="hidden" name="_next" value="#contact">
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <img src="assets/logo.png" alt="Morpheus Maps" class="footer-logo" id="footer-logo">
+                        <i class="fas fa-map-marked-alt footer-logo-icon" id="footer-logo-icon" style="display: none;"></i>
+                        <span class="footer-brand-name">Morpheus Maps</span>
+                    </div>
+                    <p>Revolutionizing road safety through intelligent prediction and data-driven insights.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#api">API Documentation</a></li>
+                        <li><a href="#integrations">Integrations</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#team">Team</a></li>
+                        <li><a href="#careers">Careers</a></li>
+                        <li><a href="#news">News</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#help">Help Center</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#privacy">Privacy Policy</a></li>
+                        <li><a href="#terms">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Morpheus Maps. All rights reserved. Making roads safer, one prediction at a time.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Authentication Modal -->
+    <div class="modal" id="auth-modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="auth-container">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="signin">Sign In</button>
+                    <button class="auth-tab" data-tab="signup">Sign Up</button>
+                </div>
+                
+                <!-- Sign In Form -->
+                <div class="auth-form active" id="signin-form">
+                    <h2>Welcome Back</h2>
+                    <p>Sign in to access your road safety dashboard</p>
+                    
+                    <!-- Inline notification for sign in -->
+                    <div class="auth-notification" id="signin-notification" style="display: none;">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span id="signin-notification-text"></span>
+                    </div>
+                    
+                    <form id="signin-form-element">
+                        <div class="form-group">
+                            <input type="email" id="signin-email" name="email" placeholder="Email Address" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="signin-password" name="password" placeholder="Password" required>
+                        </div>
+                        <div class="form-options">
+                            <label class="checkbox">
+                                <input type="checkbox" id="remember-me">
+                                <span class="checkmark"></span>
+                                Remember me
+                            </label>
+                            <a href="#" class="forgot-password">Forgot password?</a>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+                    </form>
+                </div>
+                
+                <!-- Sign Up Form -->
+                <div class="auth-form" id="signup-form">
+                    <h2>Join Morpheus Maps</h2>
+                    <p>Create an account to start your safer journey</p>
+                    
+                    <!-- Inline notification for sign up -->
+                    <div class="auth-notification" id="signup-notification" style="display: none;">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span id="signup-notification-text"></span>
+                    </div>
+                    
+                    <form id="signup-form-element">
+                        <div class="form-group">
+                            <input type="text" id="signup-name" name="name" placeholder="Full Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="signup-email" name="email" placeholder="Email Address" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="signup-password" name="password" placeholder="Password" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="signup-confirm" name="confirm-password" placeholder="Confirm Password" required>
+                        </div>
+                        <div class="form-options">
+                            <label class="checkbox">
+                                <input type="checkbox" id="agree-terms" required>
+                                <span class="checkmark"></span>
+                                I agree to the <a href="#terms">Terms of Service</a> and <a href="#privacy">Privacy Policy</a>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">Create Account</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <i class="fas fa-info-circle"></i>
+        <span id="notification-text"></span>
+        <button id="close-notification"><i class="fas fa-times"></i></button>
+    </div>
+
+    <script src="landing.js"></script>
+</body>
+</html>

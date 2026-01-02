@@ -1,0 +1,17 @@
+{
+  "total_features": 127,
+  "total_samples": 4000,
+  "feature_categories": {
+    "temporal": 17,
+    "weather": 8,
+    "risk": 17,
+    "location": 9
+  },
+  "target_distribution": {
+    "Minor": 1369,
+    "Fatal": 985,
+    "Serious": 981,
+    "Moderate": 336,
+    "Severe": 329
+  }
+}

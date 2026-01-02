@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Heatmap - Morpheus Maps</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Leaflet Heatmap Plugin -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+    <style>
+        .heatmap-container {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+        }
+        
+        .heatmap-controls {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            min-width: 300px;
+        }
+        
+        .control-group {
+            margin-bottom: 15px;
+        }
+        
+        .control-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .control-group input, .control-group select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #333;
+            background-color: white;
+        }
+        
+        .control-group input::placeholder {
+            color: #999;
+        }
+        
+        .radius-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .radius-btn {
+            padding: 8px 15px;
+            border: 2px solid #007bff;
+            background: white;
+            color: #007bff;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+        
+        .radius-btn.active {
+            background: #007bff;
+            color: white;
+        }
+        
+        .radius-btn:hover {
+            background: #0056b3;
+            color: white;
+        }
+        
+        .generate-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .generate-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            padding: 10px 20px;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .legend {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .legend h4 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+            font-size: 12px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 15px;
+            margin-right: 8px;
+            border-radius: 3px;
+        }
+        
+        .status-display {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            font-size: 14px;
+            color: #666;
+        }
+        
+        #heatmap-map {
+            height: 100vh;
+            width: 100%;
+        }
+        
+        /* Responsive Design for Heatmap */
+        @media (max-width: 768px) {
+            .heatmap-controls {
+                top: 5px;
+                left: 5px;
+                right: 5px;
+                min-width: auto;
+                width: calc(100% - 10px);
+                padding: 10px;
+                max-height: 50vh;
+                overflow-y: auto;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(5px);
+            }
+            
+            .back-btn {
+                top: 5px;
+                right: 5px;
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+            
+            .legend {
+                bottom: 5px;
+                left: 5px;
+                right: 5px;
+                padding: 8px;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(5px);
+                max-height: 20vh;
+                overflow-y: auto;
+            }
+            
+            .legend h4 {
+                font-size: 11px;
+                margin: 0 0 5px 0;
+            }
+            
+            .legend-item {
+                font-size: 10px;
+                margin: 2px 0;
+            }
+            
+            .legend-color {
+                width: 12px;
+                height: 10px;
+                margin-right: 5px;
+            }
+            
+            .status-display {
+                bottom: 5px;
+                right: 5px;
+                left: auto;
+                padding: 6px 10px;
+                font-size: 10px;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(5px);
+            }
+            
+            .control-group {
+                margin-bottom: 8px;
+            }
+            
+            .control-group label {
+                font-size: 12px;
+                margin-bottom: 3px;
+            }
+            
+            .control-group input,
+            .control-group select {
+                padding: 5px 8px;
+                font-size: 12px;
+                color: #333;
+                background-color: white;
+            }
+            
+            .radius-buttons {
+                gap: 5px;
+            }
+            
+            .radius-btn {
+                padding: 4px 8px;
+                font-size: 10px;
+                border-radius: 15px;
+            }
+            
+            .generate-btn {
+                padding: 8px;
+                font-size: 12px;
+            }
+            
+            .heatmap-controls h3 {
+                font-size: 16px;
+                margin: 0 0 10px 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .heatmap-controls {
+                top: 3px;
+                left: 3px;
+                right: 3px;
+                padding: 8px;
+                max-height: 60vh;
+            }
+            
+            .heatmap-controls h3 {
+                font-size: 14px;
+                margin-bottom: 8px;
+            }
+            
+            .back-btn {
+                top: 3px;
+                right: 3px;
+                padding: 4px 8px;
+                font-size: 11px;
+            }
+            
+            .back-btn span {
+                display: none;
+            }
+            
+            .legend {
+                bottom: 3px;
+                left: 3px;
+                right: 3px;
+                padding: 6px;
+                max-height: 20vh;
+                overflow-y: auto;
+            }
+            
+            .legend h4 {
+                font-size: 10px;
+                margin-bottom: 6px;
+            }
+            
+            .legend-item {
+                font-size: 9px;
+                margin: 2px 0;
+            }
+            
+            .legend-color {
+                width: 10px;
+                height: 8px;
+                margin-right: 4px;
+            }
+            
+            .status-display {
+                bottom: 3px;
+                right: 3px;
+                padding: 4px 8px;
+                font-size: 9px;
+            }
+            
+            .control-group {
+                margin-bottom: 6px;
+            }
+            
+            .control-group label {
+                font-size: 11px;
+                margin-bottom: 2px;
+            }
+            
+            .control-group input,
+            .control-group select {
+                padding: 4px 6px;
+                font-size: 11px;
+                color: #333;
+                background-color: white;
+            }
+            
+            .radius-buttons {
+                gap: 4px;
+            }
+            
+            .radius-btn {
+                padding: 3px 6px;
+                font-size: 9px;
+                border-radius: 12px;
+            }
+            
+            .generate-btn {
+                padding: 6px;
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="heatmap-container">
+        <!-- Back button -->
+        <a href="app.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Back to Morpheus Maps
+        </a>
+        
+        <!-- Controls Panel -->
+        <div class="heatmap-controls" id="heatmap-controls">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="margin: 0; color: #333; font-size: 18px;">
+                    <i class="fas fa-fire"></i> Risk Heatmap
+                </h3>
+                <button id="toggle-controls" class="radius-btn" style="padding: 4px 8px; font-size: 12px;">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+            
+            <div class="control-group">
+                <label for="location-input">
+                    <i class="fas fa-map-marker-alt"></i> Location
+                </label>
+                <input 
+                    type="text" 
+                    id="location-input" 
+                    placeholder="Enter city or location name"
+                    value=""
+                >
+            </div>
+            
+            <div class="control-group">
+                <label>
+                    <i class="fas fa-expand-arrows-alt"></i> Radius Selection
+                </label>
+                <div class="radius-buttons">
+                    <button class="radius-btn active" data-radius="5">5 km</button>
+                    <button class="radius-btn" data-radius="10">10 km</button>
+                    <button class="radius-btn" data-radius="15">15 km</button>
+                    <button class="radius-btn" data-radius="20">20 km</button>
+                    <button class="radius-btn" data-radius="25">25 km</button>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label for="grid-size">
+                    <i class="fas fa-th"></i> Grid Resolution
+                </label>
+                <select id="grid-size">
+                    <option value="1">1 km intervals</option>
+                    <option value="2" selected>2 km intervals</option>
+                    <option value="3">3 km intervals</option>
+                    <option value="5">5 km intervals</option>
+                </select>
+            </div>
+            
+            <button class="generate-btn" id="generate-heatmap">
+                <i class="fas fa-chart-area"></i> Generate Heatmap
+            </button>
+        </div>
+        
+        <!-- Map Container -->
+        <div id="heatmap-map"></div>
+        
+        <!-- Legend -->
+        <div class="legend">
+            <h4><i class="fas fa-palette"></i> Risk Levels</h4>
+            <div class="legend-item">
+                <div class="legend-color" style="background: navy;"></div>
+                <span>Very Low (0-20%)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: blue;"></div>
+                <span>Low (20-40%)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: cyan;"></div>
+                <span>Moderate (40-60%)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: lime;"></div>
+                <span>High (60-80%)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: yellow;"></div>
+                <span>Very High (80-90%)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: red;"></div>
+                <span>Severe (90-100%)</span>
+            </div>
+        </div>
+        
+        <!-- Status Display -->
+        <div class="status-display" id="status-display">
+            Ready to generate heatmap
+        </div>
+    </div>
+    
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="spinner"></div>
+        <p>Generating heatmap data...</p>
+    </div>
+    
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <i class="fas fa-info-circle"></i>
+        <span id="notification-text"></span>
+        <button id="close-notification"><i class="fas fa-times"></i></button>
+    </div>
+    
+    <script>
+        // Toggle controls panel visibility
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('toggle-controls');
+            const controlsPanel = document.getElementById('heatmap-controls');
+            let isMinimized = false;
+            
+            toggleBtn.addEventListener('click', function() {
+                isMinimized = !isMinimized;
+                
+                if (isMinimized) {
+                    // Minimize controls
+                    controlsPanel.style.maxHeight = '50px';
+                    controlsPanel.style.overflow = 'hidden';
+                    toggleBtn.innerHTML = '<i class="fas fa-plus"></i>';
+                } else {
+                    // Expand controls
+                    controlsPanel.style.maxHeight = '';
+                    controlsPanel.style.overflow = '';
+                    toggleBtn.innerHTML = '<i class="fas fa-minus"></i>';
+                }
+            });
+        });
+    </script>
+    <script src="heatmap.js"></script>
+</body>
+</html>

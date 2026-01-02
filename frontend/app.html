@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morpheus Maps - Road Accident Hotspot Prediction</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Leaflet Heatmap Plugin -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <img src="assets/logo.png" alt="Morpheus Maps" class="logo-image" id="logo-image">
+                <i class="fas fa-map-marked-alt logo-icon" id="logo-icon" style="display: none;"></i>
+                <div class="brand-text">
+                    <h1>Morpheus Maps</h1>
+                    <span class="tagline">Road Safety Intelligence</span>
+                </div>
+            </div>
+            
+            <div class="search-container">
+                <h2>Route Risk Analysis</h2>
+                <div class="input-group">
+                    <label for="origin">Origin</label>
+                    <div class="input-with-button">
+                        <input type="text" id="origin" placeholder="Enter origin location or use current location">
+                        <button type="button" id="use-current-location" class="btn location-btn" title="Use Current Location">
+                            <i class="fas fa-crosshairs"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="destination">Destination</label>
+                    <input type="text" id="destination" placeholder="Enter destination location">
+                </div>
+                <div class="input-group">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="safe-route-option">
+                        <span class="checkmark"></span>
+                        <span class="checkbox-label">Find Safer Route (may be longer)</span>
+                    </label>
+                </div>
+                <button id="analyze-route" class="btn primary">Analyze Route</button>
+            </div>
+            
+            <div class="hotspots-container">
+                <h2>Top Hotspots</h2>
+                <div class="input-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city" placeholder="Enter city name">
+                </div>
+                <button id="show-hotspots" class="btn secondary">Show Hotspots</button>
+                <div id="hotspots-list" class="list-container"></div>
+            </div>
+            
+            <div class="report-container">
+                <h2>Report Risk</h2>
+                <div class="input-group">
+                    <label for="report-location">Location</label>
+                    <input type="text" id="report-location" placeholder="Enter location">
+                </div>
+                <div class="input-group">
+                    <label for="risk-level">Risk Level</label>
+                    <select id="risk-level">
+                        <option value="low">Low</option>
+                        <option value="moderate">Moderate</option>
+                        <option value="high">High</option>
+                        <option value="severe">Severe</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" placeholder="Describe the risk"></textarea>
+                </div>
+                <button id="submit-report" class="btn warning">Submit Report</button>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <div class="weather-info">
+                    <i class="fas fa-cloud-sun"></i>
+                    <span id="weather-text">Loading weather...</span>
+                </div>
+                <div class="location-info">
+                    <i class="fas fa-map-marker-alt" id="location-icon"></i>
+                    <span id="location-status-text">Getting location...</span>
+                    <button id="share-live-location" class="btn location-btn" title="Share Live Location">
+                        <i class="fas fa-broadcast-tower"></i>
+                        <span>Live Location</span>
+                    </button>
+                </div>
+                <div class="controls">
+                    <button id="emergency-sos" class="btn emergency-btn">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Emergency SOS</span>
+                    </button>
+                    <button id="toggle-heatmap" class="btn secondary">Toggle Heatmap</button>
+                    <button id="show-reports" class="btn secondary">Show User Reports</button>
+                </div>
+            </div>
+            
+            <div id="map"></div>
+            
+            <div class="risk-info-panel" id="risk-info">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3 style="margin: 0; font-size: 16px;">Route Risk Analysis</h3>
+                    <button id="toggle-risk-panel" class="btn" style="padding: 4px 8px; font-size: 12px; min-width: auto;">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+                <div class="risk-summary">
+                    <div class="risk-meter">
+                        <div class="risk-indicator" id="risk-indicator"></div>
+                    </div>
+                    <div class="risk-stats">
+                        <div class="stat">
+                            <span class="label">Average Risk:</span>
+                            <span class="value" id="avg-risk">-</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Max Risk:</span>
+                            <span class="value" id="max-risk">-</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Risk Level:</span>
+                            <span class="value" id="risk-level-display">-</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="risk-details">
+                    <h4>Risk Factors</h4>
+                    <ul id="risk-factors">
+                        <li>Select a route to see risk factors</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="spinner"></div>
+        <p>Analyzing risk data...</p>
+    </div>
+    
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <i class="fas fa-info-circle"></i>
+        <span id="notification-text"></span>
+        <button id="close-notification"><i class="fas fa-times"></i></button>
+    </div>
+
+    <!-- Emergency SOS Modal -->
+    <div class="sos-modal" id="sos-modal">
+        <div class="sos-modal-content">
+            <div class="sos-header">
+                <h2><i class="fas fa-exclamation-triangle"></i> Emergency SOS</h2>
+                <button class="sos-close" id="sos-close">&times;</button>
+            </div>
+            
+            <div class="sos-body">
+                <div class="sos-status" id="sos-status">
+                    <p>Emergency services will be contacted with your location</p>
+                </div>
+                
+                <div class="emergency-contacts">
+                    <h3>Quick Emergency Contacts</h3>
+                    <div class="contact-grid">
+                        <button class="emergency-contact" data-number="100" data-service="Police">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Police</span>
+                            <span class="contact-number">100</span>
+                        </button>
+                        <button class="emergency-contact" data-number="108" data-service="Ambulance">
+                            <i class="fas fa-ambulance"></i>
+                            <span>Ambulance</span>
+                            <span class="contact-number">108</span>
+                        </button>
+                        <button class="emergency-contact" data-number="101" data-service="Fire">
+                            <i class="fas fa-fire-extinguisher"></i>
+                            <span>Fire</span>
+                            <span class="contact-number">101</span>
+                        </button>
+                        <button class="emergency-contact" data-number="1073" data-service="Traffic">
+                            <i class="fas fa-traffic-light"></i>
+                            <span>Traffic</span>
+                            <span class="contact-number">1073</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="location-info" id="location-info">
+                    <h3>Your Current Location</h3>
+                    <div class="location-details">
+                        <p><strong>Status:</strong> <span id="location-status">Getting location...</span></p>
+                        <p><strong>Coordinates:</strong> <span id="location-coords">-</span></p>
+                        <p><strong>Address:</strong> <span id="location-address">-</span></p>
+                        <button id="share-location" class="btn primary">Share My Location</button>
+                    </div>
+                </div>
+                
+                <div class="emergency-message">
+                    <h3>Emergency Message</h3>
+                    <textarea id="emergency-message" placeholder="Describe your emergency (optional)" rows="3"></textarea>
+                </div>
+                
+                <div class="sos-actions">
+                    <button id="send-sos" class="btn emergency-btn large">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Send Emergency Alert
+                    </button>
+                    <button id="cancel-sos" class="btn secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="main.js"></script>
+</body>
+</html>
